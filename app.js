@@ -1,10 +1,10 @@
 require('dotenv').config();
+const helmet = require('helmet');
 const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const express = require('express');
 const usersRout = require('./routes/users');
 const moviesRout = require('./routes/movies');
-console.log(moviesRout);
 const { login } = require('./controllers/users');
 const { makeUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
@@ -13,10 +13,13 @@ const { loginValid, registerValid } = require('./middlewares/validation');
 const NotFound = require('./errors/NotFound');
 const allowedCors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
+
+const { DB_URL } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
+mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   autoIndex: true,
@@ -25,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(requestLogger);
+app.use(helmet());
 app.use(allowedCors);
 
 app.get('/crash-test', () => {
@@ -32,6 +36,8 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.use(limiter);
 
 app.post('/signin', loginValid, login);
 app.post('/signup', registerValid, makeUser);
