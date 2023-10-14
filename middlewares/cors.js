@@ -1,15 +1,15 @@
 const allowedCors = [
-  'https://varvara.maksimchuk.nomoredomainsrocks.ru',
-  'http://varvara.maksimchuk.nomoredomainsrocks.ru',
-  'https://api.varvara.maksimchuk.nomoredomainsrocks.ru/users/me',
-  'https://api.varvara.maksimchuk.nomoredomainsrocks.ru/cards',
-  'https://api.varvara.maksimchuk.nomoredomainsrocks.ru/signup',
+  'https://var.maximchuk.diplom.nomoredomainsrocks.ru',
+  'http://var.maximchuk.diplom.nomoredomainsrocks.ru',
+  'https://api.var.maximchuk.diplom.nomoredomainsrocks.ru/users/me',
+  'https://api.var.maximchuk.diplom.nomoredomainsrocks.ru/movies',
+  'https://api.var.maximchuk.diplom.nomoredomainsrocks.ru/signup',
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:3001',
   'http://localhost:4000',
-  'https://130.193.40.90',
-  'http://130.193.40.90',
+  'https://158.160.2.119',
+  'http://158.160.2.119',
 ];
 
 module.exports = (req, res, next) => {
