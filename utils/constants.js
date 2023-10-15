@@ -5,6 +5,7 @@ const FORBIDDEN = 403;
 const NOT_FOUND = 404;
 const CONFLICT = 409;
 const SERVER_INTERNAL_ERROR = 500;
+const CONFLICT_MESSAGE = 'Пользователь с таким email уже существует';
 
 module.exports = {
   CREATED,
@@ -14,4 +15,5 @@ module.exports = {
   NOT_FOUND,
   CONFLICT,
   SERVER_INTERNAL_ERROR,
+  CONFLICT_MESSAGE,
 };

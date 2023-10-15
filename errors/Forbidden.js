@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const { FORBIDDEN } = require('../utils/constants');
 
 class Forbidden extends Error {

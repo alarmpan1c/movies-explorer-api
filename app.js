@@ -3,19 +3,13 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const express = require('express');
-const usersRout = require('./routes/users');
-const moviesRout = require('./routes/movies');
-const { login } = require('./controllers/users');
-const { makeUser } = require('./controllers/users');
-const { auth } = require('./middlewares/auth');
 const errorDes = require('./middlewares/errorsDes');
-const { loginValid, registerValid } = require('./middlewares/validation');
-const NotFound = require('./errors/NotFound');
+const { rout } = require('./routes/index');
 const allowedCors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 
-const { DB_URL } = process.env;
+const DB_URL = process.env.NODE_ENV === 'production' ? process.env.DB_URL : require('./utils/config');
 
 const app = express();
 
@@ -39,11 +33,7 @@ app.get('/crash-test', () => {
 
 app.use(limiter);
 
-app.post('/signin', loginValid, login);
-app.post('/signup', registerValid, makeUser);
-app.use('/users', auth, usersRout);
-app.use('/movies', auth, moviesRout);
-app.use('*', (req, res, next) => next(new NotFound('Страница не найдена')));
+app.use(rout);
 
 app.use(errorLogger);
 

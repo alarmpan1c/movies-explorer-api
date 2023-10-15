@@ -7,12 +7,6 @@ const Unauthorized = require('../errors/Unauthorized');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-// const getAllUsers = (req, res, next) => {
-//   User.find({})
-//     .then((data) => res.send(data))
-//     .catch(next);
-// };
-
 const getUserId = (req, res, next) => {
   const { userId } = req.params;
   User.findById(userId)
@@ -46,7 +40,8 @@ const makeUser = (req, res, next) => {
         res.status(CREATED).send(newUser);
       })
       .catch(next);
-  });
+  })
+    .catch(next);
 };
 
 const updateProfile = (req, res, next) => {
@@ -60,14 +55,6 @@ const updateProfile = (req, res, next) => {
     .then((data) => res.send(data))
     .catch(next);
 };
-
-// const updateAvatar = (req, res, next) => {
-//   const avatar = req.body;
-//   const { _id } = req.user;
-//   User.findByIdAndUpdate(_id, avatar, { new: true, runValidators: true })
-//     .then((data) => res.send(data))
-//     .catch(next);
-// };
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
@@ -93,7 +80,8 @@ const login = (req, res, next) => {
             { expiresIn: '7d' },
           );
           return res.send({ token });
-        });
+        })
+        .catch(next);
     })
     .catch(next);
 };
@@ -107,11 +95,9 @@ const infoUser = (req, res, next) => {
 };
 
 module.exports = {
-  // getAllUsers,
   getUserId,
   makeUser,
   updateProfile,
-  // updateAvatar,
   login,
   infoUser,
 };

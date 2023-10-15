@@ -7,6 +7,7 @@ const {
   NOT_FOUND,
   CONFLICT,
   SERVER_INTERNAL_ERROR,
+  CONFLICT_MESSAGE,
 } = require('../utils/constants');
 
 const BadRequest = require('../errors/BadRequest');
@@ -16,9 +17,8 @@ const Unauthorized = require('../errors/Unauthorized');
 const Forbidden = require('../errors/Forbidden');
 
 module.exports = (err, req, res, next) => {
-  console.log('errorlog', err);
   if (err.code === 11000) {
-    return res.status(CONFLICT).send({ message: 'Пользователь с таким email уже существует' });
+    return res.status(CONFLICT).send({ message: CONFLICT_MESSAGE });
   }
   if (err instanceof CastError) {
     return res.status(BAD_REQUEST).send({ message: err.message });

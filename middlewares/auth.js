@@ -4,7 +4,6 @@ const Unauthorized = require('../errors/Unauthorized');
 const auth = (req, res, next) => {
   const { NODE_ENV, JWT_SECRET } = process.env;
   const { authorization } = req.headers;
-  console.log(authorization);
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return next(new Unauthorized('Необходима авторизация'));
   }
@@ -15,7 +14,6 @@ const auth = (req, res, next) => {
   } catch (err) {
     return next(new Unauthorized('Необходима авторизация'));
   }
-  console.log(payload);
   req.user = payload;
   return next();
 };

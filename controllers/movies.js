@@ -3,8 +3,9 @@ const { CREATED } = require('../utils/constants');
 const NotFound = require('../errors/NotFound');
 const Forbidden = require('../errors/Forbidden');
 
-const getAllMovies = (req, res, next) => {
-  Movie.find({})
+const getMovies = (req, res, next) => {
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((data) => res.send(data))
     .catch(next);
 };
@@ -70,38 +71,8 @@ const deleteMovieId = (req, res, next) => {
     .catch(next);
 };
 
-// const putLike = (req, res, next) => {
-//   const owner = req.user._id;
-//   const _id = req.params._id;
-//   Movie.findByIdAndUpdate(_id, { $addToSet: { likes: owner } }, { new: true })
-//     .then((data) => {
-//       if (!data) {
-//         return next(new NotFound('Не найдено'));
-//       }
-//       return res.send(data);
-//     })
-//     .catch(next);
-//   return null;
-// };
-
-// const deleteLike = (req, res, next) => {
-//   const owner = req.user._id;
-//   const _id = req.params._id;
-//   Movie.findByIdAndUpdate(_id, { $pull: { likes: owner } }, { new: true })
-//     .then((data) => {
-//       if (!data) {
-//         return next(new NotFound('Не найдено'));
-//       }
-//       return res.send(data);
-//     })
-//     .catch(next);
-//   return null;
-// };
-
 module.exports = {
-  getAllMovies,
+  getMovies,
   makeMovie,
   deleteMovieId,
-  // putLike,
-  // deleteLike,
 };
