@@ -1,6 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 
 const urlReg = /https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?/;
+const imageUrlReg = /^\/uploads\/[a-zA-Z0-9_]+\.[a-zA-Z]{3,4}$/;
 
 const loginValid = celebrate({
   body: Joi.object().keys({
@@ -32,16 +33,16 @@ const userIdValid = celebrate({
 
 const movieValid = celebrate({
   body: Joi.object().keys({
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.string().required().min(4).max(4),
-    description: Joi.string().required().min(2),
-    image: Joi.string().required().pattern(urlReg),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().pattern(imageUrlReg),
     trailerLink: Joi.string().required().pattern(urlReg),
-    thumbnail: Joi.string().required().pattern(urlReg),
+    thumbnail: Joi.string().required().pattern(imageUrlReg),
     movieId: Joi.number().required(),
   }),
 });
