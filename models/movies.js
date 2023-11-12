@@ -33,7 +33,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     type: String,
     validate: {
-      validator: (url) => url.match(/https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?/),
+      validator: (url) => url.match(/^\/uploads\/[a-zA-Z0-9_]+\.[a-zA-Z]{3,4}$/),
     },
   },
   trailerLink: {
@@ -47,7 +47,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     type: String,
     validate: {
-      validator: (url) => url.match(/https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?/),
+      validator: (url) => url.match(/^\/uploads\/[a-zA-Z0-9_]+\.[a-zA-Z]{3,4}$/),
     },
   },
   owner: {

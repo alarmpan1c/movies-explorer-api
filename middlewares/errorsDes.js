@@ -17,6 +17,7 @@ const Unauthorized = require('../errors/Unauthorized');
 const Forbidden = require('../errors/Forbidden');
 
 module.exports = (err, req, res, next) => {
+  console.log(err);
   if (err.code === 11000) {
     return res.status(CONFLICT).send({ message: CONFLICT_MESSAGE });
   }
