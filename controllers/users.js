@@ -62,26 +62,22 @@ const login = (req, res, next) => {
     .select('+password')
     .then((user) => {
       if (!user) {
-        const err = new Unauthorized('Неверные почта или пароль');
-        return next(err);
+        throw new Unauthorized('Неверные почта или пароль');
       }
-      return bcrypt
-        .compare(password, user.password)
-        .then((result) => {
-          if (!result) {
-            return next(new Unauthorized('Неверные почта или пароль'));
-          }
-          return user;
-        })
-        .then(() => {
-          const token = jwt.sign(
-            { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-            { expiresIn: '7d' },
-          );
-          return res.send({ token });
-        })
-        .catch(next);
+
+      return bcrypt.compare(password, user.password).then((result) => {
+        if (!result) {
+          throw new Unauthorized('Неверные почта или пароль');
+        }
+
+        const token = jwt.sign(
+          { _id: user._id },
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          { expiresIn: '7d' },
+        );
+
+        res.send({ token });
+      });
     })
     .catch(next);
 };
